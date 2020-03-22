@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="780cf6fc-e9ee-4c1a-be4c-e2518842a8a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/irws/tcd/parser/CustomAnalyzer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/irws/tcd/parser/CustomAnalyzer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/irws/tcd/parser/FedralReserve.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/irws/tcd/parser/FedralReserve.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/irws/tcd/parser/jsoup_sample.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/irws/tcd/parser/jsoup_sample.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +34,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -55,7 +50,7 @@
       <recent name="E:\Copied code\IRWS_Group\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.FedralReserveIndexer">
+  <component name="RunManager" selected="Application.QueryParser">
     <configuration name="FedralReserve" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.irws.tcd.parser.FedralReserve" />
       <module name="IRWS_Group" />
@@ -102,9 +97,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="jsoup_sample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.irws.tcd.parser.jsoup_sample" />
-      <module name="IRWS_Group" />
+    <configuration name="QueryParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.irws.tcd.parser.QueryParser" />
+      <module name="IRWS_Group_project" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.irws.tcd.parser.*" />
@@ -117,11 +112,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.QueryParser" />
         <item itemvalue="Application.FedralReserveIndexer" />
         <item itemvalue="Application.FinancialTimesIndexing (1)" />
         <item itemvalue="Application.FinancialTimesIndexing" />
         <item itemvalue="Application.FedralReserve" />
-        <item itemvalue="Application.jsoup_sample" />
       </list>
     </recent_temporary>
   </component>
@@ -137,7 +132,7 @@
       <updated>1584395302543</updated>
       <workItem from="1584395306964" duration="4120000" />
       <workItem from="1584444642632" duration="19880000" />
-      <workItem from="1584827904297" duration="4728000" />
+      <workItem from="1584827904297" duration="12704000" />
     </task>
     <servers />
   </component>
@@ -149,42 +144,42 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="275" y="28" key="#Project_Structure/0.0.1366.738@0.0.1366.738" timestamp="1584395424945" />
-    <state x="488" y="87" key="#com.intellij.ide.util.MemberChooser" timestamp="1584829179810">
+    <state x="488" y="87" key="#com.intellij.ide.util.MemberChooser" timestamp="1584838922812">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="488" y="87" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1584829179810" />
-    <state width="1323" height="220" key="GridCell.Tab.0.bottom" timestamp="1584832612378">
+    <state x="488" y="87" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1584838922812" />
+    <state width="1323" height="253" key="GridCell.Tab.0.bottom" timestamp="1584840981024">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="220" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1584832612378" />
-    <state width="1323" height="220" key="GridCell.Tab.0.center" timestamp="1584832612377">
+    <state width="1323" height="253" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1584840981024" />
+    <state width="1323" height="253" key="GridCell.Tab.0.center" timestamp="1584840981024">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="220" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1584832612377" />
-    <state width="1323" height="220" key="GridCell.Tab.0.left" timestamp="1584832612377">
+    <state width="1323" height="253" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1584840981024" />
+    <state width="1323" height="253" key="GridCell.Tab.0.left" timestamp="1584840981024">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="220" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1584832612377" />
-    <state width="1323" height="220" key="GridCell.Tab.0.right" timestamp="1584832612378">
+    <state width="1323" height="253" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1584840981024" />
+    <state width="1323" height="253" key="GridCell.Tab.0.right" timestamp="1584840981024">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="220" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1584832612378" />
-    <state width="1323" height="227" key="GridCell.Tab.1.bottom" timestamp="1584455741171">
+    <state width="1323" height="253" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1584840981024" />
+    <state width="1323" height="227" key="GridCell.Tab.1.bottom" timestamp="1584840910216">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="227" key="GridCell.Tab.1.bottom/0.0.1366.738@0.0.1366.738" timestamp="1584455741171" />
-    <state width="1323" height="227" key="GridCell.Tab.1.center" timestamp="1584455741170">
+    <state width="1323" height="227" key="GridCell.Tab.1.bottom/0.0.1366.738@0.0.1366.738" timestamp="1584840910216" />
+    <state width="1323" height="227" key="GridCell.Tab.1.center" timestamp="1584840910216">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="227" key="GridCell.Tab.1.center/0.0.1366.738@0.0.1366.738" timestamp="1584455741170" />
-    <state width="1323" height="227" key="GridCell.Tab.1.left" timestamp="1584455741170">
+    <state width="1323" height="227" key="GridCell.Tab.1.center/0.0.1366.738@0.0.1366.738" timestamp="1584840910216" />
+    <state width="1323" height="227" key="GridCell.Tab.1.left" timestamp="1584840910216">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="227" key="GridCell.Tab.1.left/0.0.1366.738@0.0.1366.738" timestamp="1584455741170" />
-    <state width="1323" height="227" key="GridCell.Tab.1.right" timestamp="1584455741170">
+    <state width="1323" height="227" key="GridCell.Tab.1.left/0.0.1366.738@0.0.1366.738" timestamp="1584840910216" />
+    <state width="1323" height="227" key="GridCell.Tab.1.right" timestamp="1584840910216">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="227" key="GridCell.Tab.1.right/0.0.1366.738@0.0.1366.738" timestamp="1584455741170" />
+    <state width="1323" height="227" key="GridCell.Tab.1.right/0.0.1366.738@0.0.1366.738" timestamp="1584840910216" />
     <state x="184" y="12" key="SettingsEditor" timestamp="1584453557459">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
