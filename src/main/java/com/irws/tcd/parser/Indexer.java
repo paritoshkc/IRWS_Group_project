@@ -43,9 +43,17 @@ public class Indexer {
     }
     public IndexWriter getIndexWriterObject()
     {
-        checkIndexFolder();
+//        checkIndexFolder();
         return this.writer;
 
+    }
+    public void closeWriter()
+    {
+        try {
+            this.writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void checkIndexFolder()

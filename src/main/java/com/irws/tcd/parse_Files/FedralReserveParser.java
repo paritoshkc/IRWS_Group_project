@@ -1,40 +1,43 @@
-package com.irws.tcd.parser;
+package com.irws.tcd.parse_Files;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
-public class FedralReserveIndexer {
-//    private static IndexWriter writer;
-private List<org.apache.lucene.document.Document> document_list;
-    public void readFiles(File folder) {
+public class FedralReserveParser {
+    private List<Document> document_list;
+
+    public List<Document> readFiles(File folder,List<Document> document_list)
+    {
+        this.document_list=document_list;
+        parseFiles(folder);
+        System.out.println("file length "+ Integer.toString(document_list.size()));
+        return document_list;
+    }
+    public void parseFiles(File folder) {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
-                System.out.println("Folder name  " + fileEntry.getName());
-                readFiles(fileEntry);
+//                System.out.println("Folder name  " + fileEntry.getName());
+                parseFiles(fileEntry);
             } else {
-                if (!(fileEntry.getName().equals("readchg") || fileEntry.getName().equals("readmefr"))) {
+                if (!fileEntry.getName().contains("read")) {
                     try {
-                        Document document= Jsoup.parse(fileEntry,"UTF-8");
+                        org.jsoup.nodes.Document document= Jsoup.parse(fileEntry,"UTF-8");
                         Elements link = document.select("DOC");
-                        org.apache.lucene.document.Document doc;
+                        Document doc;
                         for (Element e: link)
                         {
-                            doc = new org.apache.lucene.document.Document();
-                            doc.add(new TextField("documentNo", e.getElementsByTag("DOCNO").text(), Field.Store.YES));
-                            doc.add(new TextField("parent", e.getElementsByTag("PARENT").text(), Field.Store.YES));
+                            doc = new Document();
+                            doc.add(new TextField("documentNo_old", e.getElementsByTag("DOCNO").text(), Field.Store.YES));
+                            doc.add(new TextField("documentNo", e.getElementsByTag("PARENT").text(), Field.Store.YES));
                             doc.add(new TextField("documentTitle", e.getElementsByTag("DOCTITLE").text(), Field.Store.YES));
                             doc.add(new TextField("usDepartment", e.getElementsByTag("USDEPT").text(), Field.Store.YES));
                             doc.add(new TextField("usBureau", e.getElementsByTag("USBUREAU").text(), Field.Store.YES));
@@ -57,7 +60,7 @@ private List<org.apache.lucene.document.Document> document_list;
                             doc.add(new TextField("import", e.getElementsByTag("IMPORT").text(), Field.Store.YES));
                             doc.add(new TextField("address", e.getElementsByTag("ADDRESS").text(), Field.Store.YES));
                             doc.add(new TextField("text", e.getElementsByTag("TEXT").text(), Field.Store.YES));
-//                            writer.addDocument(doc);
+                            document_list.add(doc);
                         }
 
                     } catch (IOException e) {
@@ -67,23 +70,31 @@ private List<org.apache.lucene.document.Document> document_list;
             }
         }
     }
-    public static void main(String[] args) {
-        final String path="src/main/index/fr";
-        FedralReserveIndexer fedralReserveIndexer = new FedralReserveIndexer();
-        IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
-        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
-        Directory dir = null;
-        try {
-            dir = FSDirectory.open(Paths.get(path));
-//            writer =  new IndexWriter(dir, config);
-//            fedralReserveIndexer.readFiles(new File("src/main/resources/fr94"),writer);
-//            writer.close();
-            System.out.println("Indexing done");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        
+    public static void main(String[] args) {
+        FedralReserveParser fedralReserveParser = new FedralReserveParser();
+        List<Document> document = new ArrayList<>();
+        //            FSDirectory dir = FSDirectory.open(Paths.get(path));
+        document = fedralReserveParser.readFiles(new File("src/main/resources/fr94"), document);
+        System.out.println("done");
     }
 
+
+
+//        FedralReserveIndexer fedralReserveIndexer = new FedralReserveIndexer();
+//        IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
+//        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+//        Directory dir = null;
+//        try {
+//            dir = FSDirectory.open(Paths.get(path));
+////            writer =  new IndexWriter(dir, config);
+////            fedralReserveIndexer.readFiles(new File("src/main/resources/fr94"),writer);
+////            writer.close();
+//            System.out.println("Indexing done");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//    }
 }
