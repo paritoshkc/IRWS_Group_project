@@ -2,6 +2,15 @@ package com.irws.tcd.parser;
 
 public class QueryBean {
     private String num,title,description,narrative;
+    private int queryNo;
+
+    public int getqueryNo() {
+        return queryNo;
+    }
+
+    public void setqueryNo(int queryNo) {
+        this.queryNo = queryNo;
+    }
 
     public String getNum() {
         return num;
