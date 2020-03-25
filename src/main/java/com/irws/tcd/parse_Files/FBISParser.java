@@ -3,6 +3,7 @@ package com.irws.tcd.parse_Files;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -18,18 +19,16 @@ import java.util.List;
 
 public class FBISParser {
     private List<Document> document_list;
-    public List<Document> readFiles(File folder, List<Document> document_list)
+    public void readFiles(File folder, IndexWriter writer)
     {
-        this.document_list=document_list;
-        parseFiles(folder);
-        System.out.println("file length "+ Integer.toString(document_list.size()));
-        return document_list;
+        parseFiles(folder,writer);
+        System.out.println("Indexing for FBIS done");
     }
-    private void parseFiles(File folder) {
+    private void parseFiles(File folder, IndexWriter writer) {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
 //                System.out.println("Folder name  " + fileEntry.getName());
-                parseFiles(fileEntry);
+                parseFiles(fileEntry,writer);
             } else {
                 if (!fileEntry.getName().contains("read")) {
                     try {
@@ -84,7 +83,7 @@ public class FBISParser {
                             doc.add(new TextField("date", date, Field.Store.YES));
                             doc.add(new TextField("headline", title, Field.Store.YES));
                             doc.add(new TextField("text", textContent, Field.Store.YES));
-                            document_list.add(doc);
+                            writer.addDocument(doc);
 
 //                            writer.addDocument(doc);
 
@@ -98,14 +97,14 @@ public class FBISParser {
         }
     }
 
-    public static void main(String[] args) {
-       FBISParser FBISParser = new FBISParser();
-        List<Document> document = new ArrayList<>();
-        document = FBISParser.readFiles(new File("src/main/resources/fbis"), document);
-        System.out.println(document.size());
-        document = FBISParser.readFiles(new File("src/main/resources/fbis"), document);
-        System.out.println(document.size());
-
-        System.out.println("done");
-    }
+//    public static void main(String[] args) {
+//       FBISParser FBISParser = new FBISParser();
+//        List<Document> document = new ArrayList<>();
+//        document = FBISParser.readFiles(new File("src/main/resources/fbis"), document);
+//        System.out.println(document.size());
+//        document = FBISParser.readFiles(new File("src/main/resources/fbis"), document);
+//        System.out.println(document.size());
+//
+//        System.out.println("done");
+//    }
 }

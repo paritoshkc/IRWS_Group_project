@@ -37,6 +37,8 @@ import org.apache.lucene.search.similarities.LMDirichletSimilarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
+import com.irws.tcd.Beans.QueryBean;
+
 //Novice Java Developer code. Please consider.
 
 public class FBISSearcher {

@@ -1,32 +1,31 @@
 package com.irws.tcd.parse_Files;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.TextField;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.IndexWriter;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 public class FedralReserveParser {
     private List<Document> document_list;
 
-    public List<Document> readFiles(File folder,List<Document> document_list)
+    public void readFiles(File folder,IndexWriter writer)
     {
-        this.document_list=document_list;
-        parseFiles(folder);
-        System.out.println("file length "+ Integer.toString(document_list.size()));
-        return document_list;
+        parseFiles(folder,writer);
+        System.out.println("Indexing for Federal Reserve done");
     }
-    public void parseFiles(File folder) {
+    public void parseFiles(File folder,IndexWriter writer) {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
 //                System.out.println("Folder name  " + fileEntry.getName());
-                parseFiles(fileEntry);
+                parseFiles(fileEntry,writer);
             } else {
                 if (!fileEntry.getName().contains("read")) {
                     try {
@@ -60,7 +59,7 @@ public class FedralReserveParser {
                             doc.add(new TextField("import", e.getElementsByTag("IMPORT").text(), Field.Store.YES));
                             doc.add(new TextField("address", e.getElementsByTag("ADDRESS").text(), Field.Store.YES));
                             doc.add(new TextField("text", e.getElementsByTag("TEXT").text(), Field.Store.YES));
-                            document_list.add(doc);
+                            writer.addDocument(doc);
                         }
 
                     } catch (IOException e) {
@@ -71,13 +70,13 @@ public class FedralReserveParser {
         }
     }
 
-    public static void main(String[] args) {
-        FedralReserveParser fedralReserveParser = new FedralReserveParser();
-        List<Document> document = new ArrayList<>();
-        //            FSDirectory dir = FSDirectory.open(Paths.get(path));
-        document = fedralReserveParser.readFiles(new File("src/main/resources/fr94"), document);
-        System.out.println("done");
-    }
+//    public static void main(String[] args) {
+//        FedralReserveParser fedralReserveParser = new FedralReserveParser();
+//        List<Document> document = new ArrayList<>();
+//        //            FSDirectory dir = FSDirectory.open(Paths.get(path));
+//        document = fedralReserveParser.readFiles(new File("src/main/resources/fr94"), document);
+//        System.out.println("done");
+//    }
 
 
 
