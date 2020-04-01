@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
@@ -35,9 +36,9 @@ public class FedralReserveParser {
                         for (Element e: link)
                         {
                             doc = new Document();
-                            doc.add(new TextField("documentNo_old", e.getElementsByTag("DOCNO").text(), Field.Store.YES));
-                            doc.add(new TextField("documentNo", e.getElementsByTag("PARENT").text(), Field.Store.YES));
-                            doc.add(new TextField("documentTitle", e.getElementsByTag("DOCTITLE").text(), Field.Store.YES));
+                            doc.add(new TextField("documentNo_old", e.getElementsByTag("PARENT").text(), Field.Store.YES));
+                            doc.add(new TextField("documentNo", e.getElementsByTag("DOCNO").text(), Field.Store.YES));
+                            doc.add(new StringField("headline", e.getElementsByTag("DOCTITLE").text(), Field.Store.YES));
                             doc.add(new TextField("usDepartment", e.getElementsByTag("USDEPT").text(), Field.Store.YES));
                             doc.add(new TextField("usBureau", e.getElementsByTag("USBUREAU").text(), Field.Store.YES));
                             doc.add(new TextField("cfrNumber", e.getElementsByTag("CFRNO").text(), Field.Store.YES));

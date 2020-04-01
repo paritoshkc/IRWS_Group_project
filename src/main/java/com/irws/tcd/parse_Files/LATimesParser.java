@@ -37,7 +37,7 @@ public class LATimesParser {
                             doc.add(new TextField("documentNo", e.getElementsByTag("DOCNO").text(), Field.Store.YES));
                             doc.add(new TextField("documentId", e.getElementsByTag("DOCID").text(), Field.Store.YES));
                             doc.add(new TextField("date", e.getElementsByTag("DATE").text(), Field.Store.YES));
-                            doc.add(new TextField("headline", e.getElementsByTag("HEADLINE").text(), Field.Store.YES));
+                            doc.add(new StringField("headline", e.getElementsByTag("HEADLINE").text(), Field.Store.YES));
                             doc.add(new TextField("section", e.getElementsByTag("SECTION").text(), Field.Store.YES));
                             doc.add(new TextField("text", e.getElementsByTag("TEXT").text(), Field.Store.YES));
                             doc.add(new TextField("byline", e.getElementsByTag("BYLINE").text(), Field.Store.YES));

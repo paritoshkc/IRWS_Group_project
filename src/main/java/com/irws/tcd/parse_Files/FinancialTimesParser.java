@@ -2,6 +2,7 @@ package com.irws.tcd.parse_Files;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
@@ -35,7 +36,7 @@ public class FinancialTimesParser {
                         for (Element e : link) {
                                 doc = new Document();
                                 doc.add(new TextField("documentNo", e.getElementsByTag("DOCNO").text(), Field.Store.YES));
-                                doc.add(new TextField("headline", e.getElementsByTag("HEADLINE").text(), Field.Store.YES));
+                                doc.add(new StringField("headline", e.getElementsByTag("HEADLINE").text(), Field.Store.YES));
                                 doc.add(new TextField("byline", e.getElementsByTag("BYLINE").text(), Field.Store.YES));
                                 doc.add(new TextField("text", e.getElementsByTag("TEXT").text(), Field.Store.YES));
 //                                writer.addDocument(doc);

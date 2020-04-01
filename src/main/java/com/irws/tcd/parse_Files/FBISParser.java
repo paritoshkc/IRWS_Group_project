@@ -2,6 +2,7 @@ package com.irws.tcd.parse_Files;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
@@ -81,7 +82,7 @@ public class FBISParser {
                             doc = new Document();
                             doc.add(new TextField("documentNo", docNumber, Field.Store.YES));
                             doc.add(new TextField("date", date, Field.Store.YES));
-                            doc.add(new TextField("headline", title, Field.Store.YES));
+                            doc.add(new StringField("headline", title, Field.Store.YES));
                             doc.add(new TextField("text", textContent, Field.Store.YES));
                             writer.addDocument(doc);
 
