@@ -36,30 +36,30 @@ public class FedralReserveParser {
                         for (Element e: link)
                         {
                             doc = new Document();
-                            doc.add(new TextField("documentNo_old", e.getElementsByTag("PARENT").text(), Field.Store.YES));
-                            doc.add(new TextField("documentNo", e.getElementsByTag("DOCNO").text(), Field.Store.YES));
-                            doc.add(new StringField("headline", e.getElementsByTag("DOCTITLE").text(), Field.Store.YES));
-                            doc.add(new TextField("usDepartment", e.getElementsByTag("USDEPT").text(), Field.Store.YES));
-                            doc.add(new TextField("usBureau", e.getElementsByTag("USBUREAU").text(), Field.Store.YES));
-                            doc.add(new TextField("cfrNumber", e.getElementsByTag("CFRNO").text(), Field.Store.YES));
-                            doc.add(new TextField("rindock", e.getElementsByTag("RINDOCK").text(), Field.Store.YES));
-                            doc.add(new TextField("agency", e.getElementsByTag("AGENCY").text(), Field.Store.YES));
-                            doc.add(new TextField("action", e.getElementsByTag("ACTION").text(), Field.Store.YES));
-                            doc.add(new TextField("summary", e.getElementsByTag("SUMMARY").text(), Field.Store.YES));
-                            doc.add(new TextField("date", e.getElementsByTag("DATE").text(), Field.Store.YES));
-                            doc.add(new TextField("further", e.getElementsByTag("FURTHER").text(), Field.Store.YES));
-                            doc.add(new TextField("signer", e.getElementsByTag("SIGNER").text(), Field.Store.YES));
-                            doc.add(new TextField("signJob", e.getElementsByTag("SIGNJOB").text(), Field.Store.YES));
-                            doc.add(new TextField("frFiling", e.getElementsByTag("FRFILING").text(), Field.Store.YES));
-                            doc.add(new TextField("billing", e.getElementsByTag("BILLING").text(), Field.Store.YES));
-                            doc.add(new TextField("footcite", e.getElementsByTag("FOOTCITE").text(), Field.Store.YES));
-                            doc.add(new TextField("footname", e.getElementsByTag("FOOTNAME").text(), Field.Store.YES));
-                            doc.add(new TextField("footnote", e.getElementsByTag("FOOTNOTE").text(), Field.Store.YES));
-                            doc.add(new TextField("supplem", e.getElementsByTag("SUPPLEM").text(), Field.Store.YES));
-                            doc.add(new TextField("table", e.getElementsByTag("TABLE").text(), Field.Store.YES));
-                            doc.add(new TextField("import", e.getElementsByTag("IMPORT").text(), Field.Store.YES));
-                            doc.add(new TextField("address", e.getElementsByTag("ADDRESS").text(), Field.Store.YES));
-                            doc.add(new TextField("text", e.getElementsByTag("TEXT").text(), Field.Store.YES));
+//                            doc.add(new TextField("documentNo_old", e.getElementsByTag("PARENT").text(), Field.Store.YES));
+                            doc.add(new TextField("documentNo", e.getElementsByTag("DOCNO").text().trim(), Field.Store.YES));
+                            doc.add(new TextField("headline", e.getElementsByTag("DOCTITLE").text().trim(), Field.Store.YES));
+//                            doc.add(new TextField("usDepartment", e.getElementsByTag("USDEPT").text(), Field.Store.YES));
+//                            doc.add(new TextField("usBureau", e.getElementsByTag("USBUREAU").text(), Field.Store.YES));
+//                            doc.add(new TextField("cfrNumber", e.getElementsByTag("CFRNO").text(), Field.Store.YES));
+//                            doc.add(new TextField("rindock", e.getElementsByTag("RINDOCK").text(), Field.Store.YES));
+//                            doc.add(new TextField("agency", e.getElementsByTag("AGENCY").text(), Field.Store.YES));
+//                            doc.add(new TextField("action", e.getElementsByTag("ACTION").text(), Field.Store.YES));
+//                            doc.add(new TextField("summary", e.getElementsByTag("SUMMARY").text(), Field.Store.YES));
+//                            doc.add(new TextField("date", e.getElementsByTag("DATE").text(), Field.Store.YES));
+//                            doc.add(new TextField("further", e.getElementsByTag("FURTHER").text(), Field.Store.YES));
+//                            doc.add(new TextField("signer", e.getElementsByTag("SIGNER").text(), Field.Store.YES));
+//                            doc.add(new TextField("signJob", e.getElementsByTag("SIGNJOB").text(), Field.Store.YES));
+//                            doc.add(new TextField("frFiling", e.getElementsByTag("FRFILING").text(), Field.Store.YES));
+//                            doc.add(new TextField("billing", e.getElementsByTag("BILLING").text(), Field.Store.YES));
+//                            doc.add(new TextField("footcite", e.getElementsByTag("FOOTCITE").text(), Field.Store.YES));
+//                            doc.add(new TextField("footname", e.getElementsByTag("FOOTNAME").text(), Field.Store.YES));
+//                            doc.add(new TextField("footnote", e.getElementsByTag("FOOTNOTE").text(), Field.Store.YES));
+//                            doc.add(new TextField("supplem", e.getElementsByTag("SUPPLEM").text(), Field.Store.YES));
+//                            doc.add(new TextField("table", e.getElementsByTag("TABLE").text(), Field.Store.YES));
+//                            doc.add(new TextField("import", e.getElementsByTag("IMPORT").text(), Field.Store.YES));
+//                            doc.add(new TextField("address", e.getElementsByTag("ADDRESS").text(), Field.Store.YES));
+                            doc.add(new TextField("text", e.getElementsByTag("TEXT").text().trim(), Field.Store.YES));
                             writer.addDocument(doc);
                         }
 

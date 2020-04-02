@@ -30,28 +30,28 @@ public class Searcher {
     private static  String path="src/main/index";
     private static int MAX_RESULTS = 1000;
 
-    public static void main(String[] args) throws IOException, ParseException {
-
-        Analyzer analyzer = new CustomAnalyzer();
-        Similarity similarity = new BM25Similarity();
-
-        // Indexing Files
-        Common_Indexer.indexFiles(analyzer,similarity,path);
-
-        Directory directory = FSDirectory.open(Paths.get(path));
-        String queryWriteDoc = "src/main/queryResult";
-
-        DirectoryReader ireader = DirectoryReader.open(directory);
-        IndexSearcher isearcher = new IndexSearcher(ireader);
-
-        // Setting Similarity for index searcher
-        isearcher.setSimilarity(new BM25Similarity());
-
-        querySearch(isearcher, analyzer, queryWriteDoc);
-        System.out.println("Query search completed");
-        ireader.close();
-        directory.close();
-    }
+//    public static void main(String[] args) throws IOException, ParseException {
+//
+//        Analyzer analyzer = new CustomAnalyzer();
+//        Similarity similarity = new BM25Similarity();
+//
+//        // Indexing Files
+//        Common_Indexer.indexFiles(analyzer,similarity,path);
+//
+//        Directory directory = FSDirectory.open(Paths.get(path));
+//        String queryWriteDoc = "src/main/queryResult";
+//
+//        DirectoryReader ireader = DirectoryReader.open(directory);
+//        IndexSearcher isearcher = new IndexSearcher(ireader);
+//
+//        // Setting Similarity for index searcher
+//        isearcher.setSimilarity(new BM25Similarity());
+//
+//        querySearch(isearcher, analyzer, queryWriteDoc);
+//        System.out.println("Query search completed");
+//        ireader.close();
+//        directory.close();
+//    }
 
     private static void querySearch(IndexSearcher isearcher, Analyzer analyzer, String queryWriteDoc) throws ParseException, IOException {
 
@@ -69,17 +69,17 @@ public class Searcher {
             BooleanQuery.Builder bq = new BooleanQuery.Builder();
             String title = queryFiles.get(i).getTitle().trim();
             String desc = queryFiles.get(i).getDescription().trim();
-            String nar = queryFiles.get(i).getNarrative().trim();
+//            String nar = queryFiles.get(i).getNarrative().trim();
 
             // Building boolean queries for each element in query text
             Query a = builder.createBooleanQuery("headline", title);
             Query b = builder.createBooleanQuery("text", desc);
-            Query c = builder.createBooleanQuery("text", nar);
+//            Query c = builder.createBooleanQuery("text", nar);
 
             // Adding all queries to builder
             bq.add(a, BooleanClause.Occur.SHOULD);
             bq.add(b, BooleanClause.Occur.SHOULD);
-            bq.add(c, BooleanClause.Occur.SHOULD);
+//            bq.add(c, BooleanClause.Occur.SHOULD);
 
             // Building the final query
             Query query = bq.build();

@@ -81,8 +81,8 @@ public class FBISParser {
 
                             doc = new Document();
                             doc.add(new TextField("documentNo", docNumber, Field.Store.YES));
-                            doc.add(new TextField("date", date, Field.Store.YES));
-                            doc.add(new StringField("headline", title, Field.Store.YES));
+//                            doc.add(new TextField("date", date, Field.Store.YES));
+                            doc.add(new TextField("headline", title, Field.Store.YES));
                             doc.add(new TextField("text", textContent, Field.Store.YES));
                             writer.addDocument(doc);
 

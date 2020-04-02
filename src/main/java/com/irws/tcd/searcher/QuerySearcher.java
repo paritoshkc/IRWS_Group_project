@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -16,6 +17,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.similarities.BM25Similarity;
+import org.apache.lucene.search.similarities.LMDirichletSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -24,6 +26,7 @@ import com.irws.tcd.Beans.QueryBean;
 import com.irws.tcd.index.Common_Indexer;
 import com.irws.tcd.index.CustomAnalyzer;
 import com.irws.tcd.parse_Files.ParseQueryFile;
+import com.irws.tcd.parser.FBISPrivateStopAnalyser;
 
 public class QuerySearcher {
 	
@@ -42,8 +45,11 @@ public class QuerySearcher {
 		DirectoryReader ireader = DirectoryReader.open(directory);
 		IndexSearcher isearcher = new IndexSearcher(ireader);
 		
-		isearcher.setSimilarity(new BM25Similarity());
-		MultiFieldQueryParser parser = new MultiFieldQueryParser (new String[]{"headline", "documentTitle", "text"},analyzer);
+		isearcher.setSimilarity(similarity);
+		HashMap<String, Float> boostedScores = new HashMap<String, Float>();
+		boostedScores.put("headline", 0.1f);
+		boostedScores.put("text", 0.9f);
+		MultiFieldQueryParser parser = new MultiFieldQueryParser (new String[]{"headline", "text"},analyzer,boostedScores);
 		
 		querySearch(isearcher, parser,queryWriteDoc);
 		System.out.println("Query search completed");
