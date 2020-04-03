@@ -182,11 +182,11 @@ public class FBISSearcher {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static void main(String[] args) throws IOException, ParseException {
-
-		FBISSearcher mysearcher = new FBISSearcher();
-		String return_phrase = mysearcher.searchOperations();
-		System.out.println(return_phrase);
-	}
+//	public static void main(String[] args) throws IOException, ParseException {
+//
+//		FBISSearcher mysearcher = new FBISSearcher();
+//		String return_phrase = mysearcher.searchOperations();
+//		System.out.println(return_phrase);
+//	}
 	
 }
