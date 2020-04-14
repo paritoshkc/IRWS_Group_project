@@ -35,10 +35,10 @@ public class FinancialTimesParser {
                         Document doc;
                         for (Element e : link) {
                                 doc = new Document();
-                                doc.add(new TextField("documentNo", e.getElementsByTag("DOCNO").text().trim(), Field.Store.YES));
-                                doc.add(new TextField("headline", e.getElementsByTag("HEADLINE").text().trim(), Field.Store.YES));
+                                doc.add(new TextField("documentNo", e.getElementsByTag("DOCNO").toString().replace("<docno>", "").replace("</docno>", "").replace("\n", "").trim(), Field.Store.YES));
+                                doc.add(new TextField("headline", e.getElementsByTag("HEADLINE").toString().replace("<headline>", "").replace("</headline>", "").trim(), Field.Store.YES));
 //                                doc.add(new TextField("byline", e.getElementsByTag("BYLINE").text().trim(), Field.Store.YES));
-                                doc.add(new TextField("text", e.getElementsByTag("TEXT").text().trim(), Field.Store.YES));
+                                doc.add(new TextField("text", e.getElementsByTag("TEXT").toString().replace("<text>", "").replace("</text>", "").trim(), Field.Store.YES));
 //                                writer.addDocument(doc);
                                 writer.addDocument(doc);
                         }

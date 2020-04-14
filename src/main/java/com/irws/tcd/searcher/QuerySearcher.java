@@ -31,6 +31,7 @@ import com.irws.tcd.parser.FBISPrivateStopAnalyser;
 public class QuerySearcher {
 	
     private static  String path="src/main/index";
+    private static String[] replaceWordsList = {"relevant","document","focus","describing","a relevant document", "documents","to be relevant","will","may include","must","identifies","discussed","could","include","mentioning"};
     private static int MAX_RESULTS = 1000;
 
 	public static void main(String[] args) throws IOException, ParseException {
@@ -65,7 +66,60 @@ public class QuerySearcher {
 		
 		for(int i=0; i<queryFiles.size(); i++)
 		{
-			Query query = parser.parse(QueryParser.escape( queryFiles.get(i).getDescription().trim()));
+			String querySentence = queryFiles.get(i).getDescription();
+			if(queryFiles.get(i).getNarrative().contains(";"))
+			{
+				String[] sentences = queryFiles.get(i).getNarrative().split(";");
+				for(String sentence: sentences)
+				{
+					
+					if(!sentence.toLowerCase().contains("not relevant"))
+					{
+						if(sentence.contains("."))
+						{
+							String[] relevantSentences = sentence.split("\\.\\s");
+							for(String relevantSentence: relevantSentences )
+							{
+								if(!relevantSentence.toLowerCase().contains("not relevant"))
+								{
+									for(String stopWords: replaceWordsList)
+									{
+										relevantSentence = relevantSentence.toLowerCase().replace(stopWords, "");
+									}
+									querySentence = querySentence.concat(" "+relevantSentence);
+								}
+							}
+						
+						}
+						else
+						{
+							for(String stopWords: replaceWordsList)
+							{
+								sentence = sentence.toLowerCase().replace(stopWords, "");
+							}
+							querySentence = querySentence.concat(" "+sentence);
+						}
+							
+					}
+				}
+			}
+			else
+			{
+				String[] relevantSentences = queryFiles.get(i).getNarrative().split("\\.\\s");
+				for(String relevantSentence: relevantSentences )
+				{
+					if(!relevantSentence.toLowerCase().contains("not relevant"))
+					{
+						for(String stopWords: replaceWordsList)
+						{
+							relevantSentence = relevantSentence.toLowerCase().replace(stopWords, "");
+						}
+						querySentence = querySentence.concat(" "+relevantSentence);
+					}
+				}
+			}
+			System.out.println("Included Sentence: "+ querySentence);
+			Query query = parser.parse(QueryParser.escape(querySentence.trim()));
 			ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
 			for (int j = 0; j < hits.length; j++)
 			{

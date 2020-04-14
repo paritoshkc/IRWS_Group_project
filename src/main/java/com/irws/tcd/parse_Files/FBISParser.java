@@ -38,45 +38,45 @@ public class FBISParser {
                         Document doc;
                         for (Element e: link)
                         {
-                            String docNumber = e.getElementsByTag("DOCNO").text().trim();
-                            String date = e.getElementsByTag("DATE1").text().trim();
-                            String title = e.getElementsByTag("TI").text().trim();
-                            String textContent = e.getElementsByTag("TEXT").text().trim();
-
-                            DateFormat df = new SimpleDateFormat("MMMM dd yyyy");
-                            DateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
-
-                            try {
-                                date = sdf.format(df.parse(date));
-                            } catch (ParseException e0) {
-                                DateFormat df1 = new SimpleDateFormat("dd MMM yyyy");
-                                try {
-                                    date = sdf.format(df1.parse(date));
-                                } catch (ParseException e1) {
-                                    DateFormat df2 = new SimpleDateFormat("dd MMMM");
-                                    try {
-                                        Calendar cal = Calendar.getInstance();
-                                        cal.setTime(df2.parse(date));
-                                        cal.set(Calendar.YEAR, 1994);
-                                        date = sdf.format(cal.getTime());
-                                    } catch (ParseException e2) {
-                                        date = date.substring(date.length() - 4);
-                                    }
-                                }
-                            }
+                            String docNumber = e.getElementsByTag("DOCNO").toString().replace("<docno>", "").replace("</docno>", "").replace("\n", "").trim();
+//                            String date = e.getElementsByTag("DATE1").toString().replace("<docno>", "").replace("</docno>", "");
+                            String title = e.getElementsByTag("TI").toString().replace("<ti>", "").replace("</ti>", "").trim();
+                            String textContent = e.getElementsByTag("TEXT").toString().replace("<text>", "").replace("</text>", "").trim();
+//
+//                            DateFormat df = new SimpleDateFormat("MMMM dd yyyy");
+//                            DateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
+//
+//                            try {
+//                                date = sdf.format(df.parse(date));
+//                            } catch (ParseException e0) {
+//                                DateFormat df1 = new SimpleDateFormat("dd MMM yyyy");
+//                                try {
+//                                    date = sdf.format(df1.parse(date));
+//                                } catch (ParseException e1) {
+//                                    DateFormat df2 = new SimpleDateFormat("dd MMMM");
+//                                    try {
+//                                        Calendar cal = Calendar.getInstance();
+//                                        cal.setTime(df2.parse(date));
+//                                        cal.set(Calendar.YEAR, 1994);
+//                                        date = sdf.format(cal.getTime());
+//                                    } catch (ParseException e2) {
+//                                        date = date.substring(date.length() - 4);
+//                                    }
+//                                }
+//                            }
 
                             if (!textContent.contains("[Text]")) {
 
                                 if (textContent.contains("[Passage omitted]")) {
-                                    textContent = textContent.substring(textContent.indexOf("[Passage omitted]")).replace("[Passage omitted]", "").trim();
+                                    textContent = textContent.substring(textContent.indexOf("[Passage omitted]")).replace("[Passage omitted]", "");
                                 } else if (textContent.contains("[Excerpts]")) {
-                                    textContent = textContent.substring(textContent.indexOf("[Excerpts]")).replace("[Excerpts]", "").trim();
+                                    textContent = textContent.substring(textContent.indexOf("[Excerpts]")).replace("[Excerpts]", "");
                                 } else {
 //                System.out.println(textContent);
 //                break;
                                 }
                             } else {
-                                textContent = textContent.substring(textContent.indexOf("[Text]")).replace("[Text]", "").trim();
+                                textContent = textContent.substring(textContent.indexOf("[Text]")).replace("[Text]", "");
                             }
 
                             doc = new Document();

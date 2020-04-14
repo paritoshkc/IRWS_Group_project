@@ -35,20 +35,19 @@ public class ParseQueryFile {
                             String desc="";
                             while(!next_line.contains("<narr>"))
                             {
-                                desc=desc.concat(next_line);
+                                desc=desc.concat(" "+next_line);
                                 next_line=scanner.nextLine();
                             }
                             queryBean.setDescription(desc);
                             String narr="";
                             while(!next_line.contains("</top>"))
                             {
-                                narr=narr.concat(next_line);
+                                narr=narr.concat(" "+next_line);
                                 next_line=scanner.nextLine();
 
                             }
                             queryBean.setNarrative(narr.replace("<narr> Narrative: ",""));
                             queryList.add(queryBean);
-                            System.out.println(queryBean.getDescription());
                         }
                 }
             } 
