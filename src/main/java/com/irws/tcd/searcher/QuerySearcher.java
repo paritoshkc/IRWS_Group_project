@@ -27,6 +27,7 @@ import com.irws.tcd.index.Common_Indexer;
 import com.irws.tcd.index.CustomAnalyzer;
 import com.irws.tcd.parse_Files.ParseQueryFile;
 import com.irws.tcd.parser.FBISPrivateStopAnalyser;
+import com.irws.tcd.parser.FBISPrivateBM25;
 
 public class QuerySearcher {
 	
@@ -36,8 +37,11 @@ public class QuerySearcher {
 
 	public static void main(String[] args) throws IOException, ParseException {
 
-		Analyzer analyzer = new CustomAnalyzer();
-		Similarity similarity = new BM25Similarity();
+		//Analyzer analyzer = new CustomAnalyzer();
+		Analyzer analyzer = new FBISPrivateStopAnalyser();
+		
+		//Similarity similarity = new BM25Similarity();
+		Similarity similarity = new FBISPrivateBM25();
 		Common_Indexer.indexFiles(analyzer,similarity,path);
 		
 		Directory directory = FSDirectory.open(Paths.get(path));
