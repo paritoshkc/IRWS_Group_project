@@ -69,7 +69,7 @@ public class Searcher {
             BooleanQuery.Builder bq = new BooleanQuery.Builder();
             String title = queryFiles.get(i).getTitle().trim();
             String desc = queryFiles.get(i).getDescription().trim();
-//            String nar = queryFiles.get(i).getNarrative().trim();
+            String nar = queryFiles.get(i).getNarrative().trim();
 
             // Building boolean queries for each element in query text
             Query a = builder.createBooleanQuery("headline", title);

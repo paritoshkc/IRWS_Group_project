@@ -19,7 +19,7 @@ import org.apache.lucene.util.SmallFloat;
 public class FBISPrivateBM25 extends Similarity {
 	
 	  private final float k1 = (float)1.15;
-	  private final float b  = (float)0.84;
+	  private final float b  = (float)0.85;
 
 	  /**
 	   * BM25 with the supplied parameter values.

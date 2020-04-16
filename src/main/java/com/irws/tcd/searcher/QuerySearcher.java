@@ -13,21 +13,21 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.similarities.BM25Similarity;
-import org.apache.lucene.search.similarities.LMDirichletSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 import com.irws.tcd.Beans.QueryBean;
 import com.irws.tcd.index.Common_Indexer;
-import com.irws.tcd.index.CustomAnalyzer;
 import com.irws.tcd.parse_Files.ParseQueryFile;
-import com.irws.tcd.parser.FBISPrivateStopAnalyser;
 import com.irws.tcd.parser.FBISPrivateBM25;
+import com.irws.tcd.parser.FBISPrivateStopAnalyser;
 
 public class QuerySearcher {
 	
@@ -40,7 +40,7 @@ public class QuerySearcher {
 		//Analyzer analyzer = new CustomAnalyzer();
 		Analyzer analyzer = new FBISPrivateStopAnalyser();
 		
-		//Similarity similarity = new BM25Similarity();
+//		Similarity similarity = new BM25Similarity();
 		Similarity similarity = new FBISPrivateBM25();
 		Common_Indexer.indexFiles(analyzer,similarity,path);
 		
@@ -70,7 +70,11 @@ public class QuerySearcher {
 		
 		for(int i=0; i<queryFiles.size(); i++)
 		{
-			String querySentence = queryFiles.get(i).getDescription();
+			BooleanQuery.Builder booleanQuery = new BooleanQuery.Builder();
+			Query titleQuery = parser.parse(QueryParser.escape(queryFiles.get(i).getTitle().trim()));
+			Query descriptionQuery = parser.parse(QueryParser.escape(queryFiles.get(i).getDescription().trim()));
+			Query narrativeQuery = null;
+			String querySentence = "";
 			if(queryFiles.get(i).getNarrative().contains(";"))
 			{
 				String[] sentences = queryFiles.get(i).getNarrative().split(";");
@@ -122,9 +126,16 @@ public class QuerySearcher {
 					}
 				}
 			}
-			System.out.println("Included Sentence: "+ querySentence);
-			Query query = parser.parse(QueryParser.escape(querySentence.trim()));
-			ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
+			if(querySentence.length()>0)
+				narrativeQuery = parser.parse(QueryParser.escape(querySentence.trim()));
+//			System.out.println("Included Sentence: "+ querySentence);
+//			Query query = parser.parse(QueryParser.escape(querySentence.trim()));
+			booleanQuery.add(new BoostQuery(titleQuery, (float) 4), BooleanClause.Occur.SHOULD);
+			booleanQuery.add(new BoostQuery(descriptionQuery, (float) 1.7), BooleanClause.Occur.SHOULD);
+			if (narrativeQuery != null) {
+				booleanQuery.add(new BoostQuery(narrativeQuery, (float) 1.2), BooleanClause.Occur.SHOULD);
+			}
+			ScoreDoc[] hits = isearcher.search(booleanQuery.build(), MAX_RESULTS).scoreDocs;
 			for (int j = 0; j < hits.length; j++)
 			{
 				Document hitDoc = isearcher.doc(hits[j].doc);
