@@ -18,17 +18,26 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+
 import org.apache.lucene.search.*;
 import org.apache.lucene.search.similarities.*;
+
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.BoostQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.similarities.Similarity;
+
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 import com.irws.tcd.Beans.QueryBean;
 import com.irws.tcd.index.Common_Indexer;
-import com.irws.tcd.index.CustomAnalyzer;
 import com.irws.tcd.parse_Files.ParseQueryFile;
-import com.irws.tcd.parser.FBISPrivateStopAnalyser;
 import com.irws.tcd.parser.FBISPrivateBM25;
+import com.irws.tcd.parser.FBISPrivateStopAnalyser;
 
 public class QuerySearcher {
 	
@@ -84,6 +93,29 @@ public class QuerySearcher {
 		}
 
 		//Analyzer analyzer = new CustomAnalyzer();
+//
+//		Analyzer analyzer = new FBISPrivateStopAnalyser();
+//
+////		Similarity similarity = new BM25Similarity();
+//		Similarity similarity = new FBISPrivateBM25();
+//		Common_Indexer.indexFiles(analyzer,similarity,path);
+//
+//		Directory directory = FSDirectory.open(Paths.get(path));
+//		String queryWriteDoc = "src/main/queryResult";
+//
+//		DirectoryReader ireader = DirectoryReader.open(directory);
+//		IndexSearcher isearcher = new IndexSearcher(ireader);
+//
+//		isearcher.setSimilarity(similarity);
+//		HashMap<String, Float> boostedScores = new HashMap<String, Float>();
+//		boostedScores.put("headline", 0.1f);
+//		boostedScores.put("text", 0.9f);
+//		MultiFieldQueryParser parser = new MultiFieldQueryParser (new String[]{"headline", "text"},analyzer,boostedScores);
+//
+//		querySearch(isearcher, parser,queryWriteDoc);
+//		System.out.println("Query search completed");
+//		ireader.close();
+//		directory.close();
 
 	}
 
@@ -100,7 +132,10 @@ public class QuerySearcher {
 			Query descriptionQuery = parser.parse(QueryParser.escape(queryFiles.get(i).getDescription().trim()));
 			Query narrativeQuery = null;
 			String querySentence = "";
+
 //			String querySentence = queryFiles.get(i).getDescription();
+
+
 			if(queryFiles.get(i).getNarrative().contains(";"))
 			{
 				String[] sentences = queryFiles.get(i).getNarrative().split(";");
