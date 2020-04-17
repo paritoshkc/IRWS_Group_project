@@ -39,7 +39,7 @@ import org.apache.lucene.search.similarities.MultiSimilarity;
 
 public class QuerySearcherMultiSim {
 	
-    private static  String path="src/main/index/classic";
+    private static  String path="src/main/index/multisim";
     private static String[] replaceWordsList = {"relevant","document","focus","describing","a relevant document", "documents","to be relevant","will","may include","must","identifies","discussed","could","include","mentioning"};
     private static int MAX_RESULTS = 1000;
 
@@ -51,13 +51,14 @@ public class QuerySearcherMultiSim {
 		Similarity similarity2 = new LMJelinekMercerSimilarity(0.5f);
 		Similarity similarity3 = new ClassicSimilarity();
 		Similarity similarity4 = new LMDirichletSimilarity();
-		Similarity sims[] = new Similarity[4];
+		Similarity sims[] = new Similarity[2];
 		sims[0] = similarity1;
 		sims[1] = similarity2;
-		sims[2] = similarity3;
-		sims[3] = similarity4;
+		//sims[2] = similarity3;
+		//sims[3] = similarity4;
 		MultiSimilarity similarity = new MultiSimilarity(sims);
 		
+		delIndexFolder(path);		
 		
 		Common_Indexer.indexFiles(analyzer,similarity,path);
 		
@@ -73,35 +74,34 @@ public class QuerySearcherMultiSim {
 		boostedScores.put("text", 0.9f);
 		MultiFieldQueryParser parser = new MultiFieldQueryParser (new String[]{"headline", "text"},analyzer,boostedScores);
 		
-		String queryWriteDoc = "src/main/queryResult";
+		String queryWriteDoc = "output/multisim/queryResultMultisim";
 		isearcher.setSimilarity(similarity);
 		querySearch(isearcher, parser,queryWriteDoc);
 		System.out.println("Query search completed MultiSimilarity");
 		
-		queryWriteDoc = "src/main/queryResultBM25";
+		queryWriteDoc = "output/multisim/queryResultBM25";
 		isearcher.setSimilarity(similarity1);
 		querySearch(isearcher, parser,queryWriteDoc);
 		System.out.println("Query search completed BM25");
 		
-		queryWriteDoc = "src/main/queryResultLMJe";
+		queryWriteDoc = "output/multisim/queryResultLMJe";
 		isearcher.setSimilarity(similarity2);
 		querySearch(isearcher, parser,queryWriteDoc);
 		System.out.println("Query search completed LMJelinekMercerSimilarity");
 		
-		queryWriteDoc = "src/main/queryResultClassic";
-		isearcher.setSimilarity(similarity3);
-		querySearch(isearcher, parser,queryWriteDoc);
-		System.out.println("Query search completed ClassicSimilarity");
-		
-		queryWriteDoc = "src/main/queryResultLMD";
-		isearcher.setSimilarity(similarity4);
-		querySearch(isearcher, parser,queryWriteDoc);
-		System.out.println("Query search completed LMDirichletSimilarity");
-		
-		
+//		queryWriteDoc = "target/queryResultClassic";
+//		isearcher.setSimilarity(similarity3);
+//		querySearch(isearcher, parser,queryWriteDoc);
+//		System.out.println("Query search completed ClassicSimilarity");
+//		
+//		queryWriteDoc = "target/queryResultLMD";
+//		isearcher.setSimilarity(similarity4);
+//		querySearch(isearcher, parser,queryWriteDoc);
+//		System.out.println("Query search completed LMDirichletSimilarity");
+//		
 		ireader.close();
 		directory.close();
-		System.out.println("Finished !!!");
+		System.out.println("Search Finished !!!");
 	}
 
 	private static void querySearch(IndexSearcher isearcher, MultiFieldQueryParser parser, String queryWriteDoc) throws ParseException, IOException {
@@ -170,8 +170,6 @@ public class QuerySearcherMultiSim {
 			}
 			if(querySentence.length()>0)
 				narrativeQuery = parser.parse(QueryParser.escape(querySentence.trim()));
-//			System.out.println("Included Sentence: "+ querySentence);
-//			Query query = parser.parse(QueryParser.escape(querySentence.trim()));
 			booleanQuery.add(new BoostQuery(titleQuery, (float) 4), BooleanClause.Occur.SHOULD);
 			booleanQuery.add(new BoostQuery(descriptionQuery, (float) 1.7), BooleanClause.Occur.SHOULD);
 			if (narrativeQuery != null) {
@@ -189,5 +187,18 @@ public class QuerySearcherMultiSim {
 		resultWriter.close();
 		
 	}
+		public static void delIndexFolder(String folder_path)
+	        {
+			File file = new File(folder_path);
+			File[] dirFiles=file.listFiles();
+			if (dirFiles!=null)
+			{
+			    for (File doc: dirFiles
+			    ) {
+				doc.delete();
+			    }
+			}
+			file.delete();
+	        }
 
 }
