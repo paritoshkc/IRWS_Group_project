@@ -1,6 +1,7 @@
 package com.irws.tcd.searcher;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -44,6 +45,19 @@ public class QuerySearcher {
     private static  String path="src/main/index";
     private static String[] replaceWordsList = {"relevant","document","focus","describing","a relevant document", "documents","to be relevant","will","may include","must","identifies","discussed","could","include","mentioning"};
     private static int MAX_RESULTS = 1000;
+	public void checkIndexFolder()
+	{
+		File file = new File("src/main/resources/index");
+		File[] dirFiles=file.listFiles();
+		if (dirFiles!=null)
+		{
+			for (File doc: dirFiles
+			) {
+				doc.delete();
+			}
+		}
+		file.delete();
+	}
 
 	public static void main(String[] args) throws IOException, ParseException {
 
