@@ -50,8 +50,8 @@ public class QuerySearcherMultiSim {
 		Analyzer analyzer = new FBISPrivateStopAnalyser();
 		Similarity similarity1 = new FBISPrivateBM25();
 		Similarity similarity2 = new LMJelinekMercerSimilarity(0.5f);
-		Similarity similarity3 = new ClassicSimilarity();
-		Similarity similarity4 = new LMDirichletSimilarity();
+		//Similarity similarity3 = new ClassicSimilarity();
+		//Similarity similarity4 = new LMDirichletSimilarity();
 		Similarity sims[] = new Similarity[2];
 		sims[0] = similarity1;
 		sims[1] = similarity2;
